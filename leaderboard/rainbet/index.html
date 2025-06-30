@@ -281,11 +281,11 @@
             <div data-v-1d580398="" class="row text">
                 <span data-v-1d580398="" class="title">
                     <div data-v-1d580398="" class="price-wrapper glow">
-                        $ 100
-                    </div> WEEKLY CODE <span class="glow">ECO</span> Leaderboard!
+                        $ 200
+                    </div> MONTHLY CODE <span class="glow">ECO</span> Leaderboard!
                 </span>
                 <span data-v-1d580398="" class="subtitle" style="color: #FFF;">Every <b>BET</b> on Rainbet under Code
-                    <b>EcoRain</b>
+                    <b>ECO</b>
                     counts towards your score. <br>
                     <i>The leaderboard updates every 15 minutes.</i><br>
                     <div class="warning-message">
@@ -429,24 +429,33 @@
 <script>
 const API_URL = 'https://ecoraindata.onrender.com/leaderboard/top14';
 const roobetLogo = '/assets/rainbetlogo.png';
-const rewards = [20, 70, 10];
+const rewards = [50, 100, 25, 15, 10];
 const top3Glows = ['0 0 40px #C0C0C0', '0 0 40px #FFD700', '0 0 40px #CD7F32'];
 
 function updateCountdown() {
   const el = document.getElementById("countdown");
   const now = new Date();
-  const target = new Date(Date.UTC(2025, 5, 8, 0, 0, 0));
+
+  // Get first day of next month at 00:00 UTC, then subtract 1 minute to get end of current month at 23:59
+  const nextMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1, 0, 0, 0));
+  const target = new Date(nextMonth.getTime() - 60000); // 1 minute before next month = last day 23:59 UTC
+
   const diff = target - now;
-  if (diff <= 0) return el.textContent = "Ended";
+  if (diff <= 0) {
+    el.textContent = "Ended";
+    return;
+  }
+
   const d = Math.floor(diff / (1000 * 60 * 60 * 24));
   const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
   const m = Math.floor((diff / (1000 * 60)) % 60);
   const s = Math.floor((diff / 1000) % 60);
+
   el.textContent = `${d}d ${h}h ${m}m ${s}s`;
 }
+
 setInterval(updateCountdown, 1000);
 updateCountdown();
-
 async function loadLeaderboard() {
   const res = await fetch(API_URL);
   const data = await res.json();
