@@ -448,11 +448,15 @@ function updateCountdown() {
   const el = document.getElementById("countdown");
   const now = new Date();
 
-  // Get first day of next month at 00:00 UTC, then subtract 1 minute to get end of current month at 23:59
-  const nextMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1, 0, 0, 0));
-  const target = new Date(nextMonth.getTime() - 60000); // 1 minute before next month = last day 23:59 UTC
+  // Base start time: July 1, 2025 at 00:00 UTC
+  const base = new Date(Date.UTC(2025, 6, 1, 0, 0, 0));
+  const msInWeek = 7 * 24 * 60 * 60 * 1000;
 
-  const diff = target - now;
+  // Find end of current week
+  const weeksPassed = Math.floor((now.getTime() - base.getTime()) / msInWeek);
+  const weekEnd = new Date(base.getTime() + (weeksPassed + 1) * msInWeek - 1000); // 1 sec before next week
+
+  const diff = weekEnd - now;
   if (diff <= 0) {
     el.textContent = "Ended";
     return;
@@ -468,6 +472,7 @@ function updateCountdown() {
 
 setInterval(updateCountdown, 1000);
 updateCountdown();
+
 async function loadLeaderboard() {
   const res = await fetch(API_URL);
   const data = await res.json();
