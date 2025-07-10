@@ -448,15 +448,10 @@ function updateCountdown() {
   const el = document.getElementById("countdown");
   const now = new Date();
 
-  // Base start time: July 1, 2025 at 00:00 UTC
-  const base = new Date(Date.UTC(2025, 6, 1, 0, 0, 0));
-  const msInWeek = 7 * 24 * 60 * 60 * 1000;
+  // Countdown ends on July 24, 2025 at 00:00:01 UTC
+  const target = new Date(Date.UTC(2025, 6, 24, 0, 0, 0)); // month is 0-indexed (6 = July)
 
-  // Find end of current week
-  const weeksPassed = Math.floor((now.getTime() - base.getTime()) / msInWeek);
-  const weekEnd = new Date(base.getTime() + (weeksPassed + 1) * msInWeek - 1000); // 1 sec before next week
-
-  const diff = weekEnd - now;
+  const diff = target - now;
   if (diff <= 0) {
     el.textContent = "Ended";
     return;
