@@ -476,8 +476,11 @@ async function loadLeaderboard() {
 
   data.forEach((entry, index) => {
     const place = index + 1;
-    const reward = index < rewards.length ? `$ ${rewards[index]}` : '$ 0';
-    const wagered = `$ ${Number(entry.wagered).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    const reward = index < rewards.length
+      ? `<img src="/assets/clashgem1.png" alt="gem" style="height: 20px; width: 20px; vertical-align: middle; margin-right: 4px;">${rewards[index]}`
+      : `<img src="/assets/clashgem1.png" alt="gem" style="height: 20px; width: 20px; vertical-align: middle; margin-right: 4px;">0`;
+    const wagered = `<img src="/assets/clashgem1.png" alt="gem" style="height: 18px; width: 18px; vertical-align: middle; margin-right: 4px;">
+    ${Number(entry.wagered).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     const username = entry.username;
 
     if (index < 3) {
