@@ -285,7 +285,7 @@
                 <span data-v-1d580398="" class="title">
                     <div data-v-1d580398="" class="price-wrapper glow">
                         $ 400
-                    </div> BIWEEKLY CODE <span class="glow">ECO</span> Leaderboard!
+                    </div> WEEKLY CODE <span class="glow">ECO</span> Leaderboard!
                 </span>
                 <span data-v-1d580398="" class="subtitle" style="color: #FFF;">Every <b>BET</b> on Rainbet under Code
                     <b>ECO</b>
@@ -444,8 +444,20 @@ function updateCountdown() {
   const el = document.getElementById("countdown");
   const now = new Date();
 
-  // Countdown ends on July 24, 2025 at 00:00:00 UTC
-  const target = new Date(Date.UTC(2025, 6, 26, 0, 0, 0)); // July is month 6 (0-indexed)
+  const july12 = new Date(Date.UTC(2025, 6, 12, 0, 0, 0)); // July 12
+  const july19 = new Date(Date.UTC(2025, 6, 19, 0, 0, 0)); // July 19
+  const july27 = new Date(Date.UTC(2025, 6, 27, 0, 0, 0)); // July 27
+
+  let target;
+
+  if (now >= july12 && now < july19) {
+    target = new Date(Date.UTC(2025, 6, 18, 23, 59, 59)); // End of July 18
+  } else if (now >= july19 && now < july27) {
+    target = new Date(Date.UTC(2025, 6, 26, 23, 59, 59)); // End of July 26
+  } else {
+    el.textContent = "Ended";
+    return;
+  }
 
   const diff = target - now;
   if (diff <= 0) {
